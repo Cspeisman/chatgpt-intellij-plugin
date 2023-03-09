@@ -1,18 +1,32 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>org.jetbrains.plugins.template</id>
-    <name>IntelliJ Platform Plugin Template</name>
-    <vendor>JetBrains</vendor>
+    <id>com.github.cspeisman.chatgptintellijplugin</id>
+    <name>Corey's ChatBot</name>
+    <vendor>cspeisman</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.jetbrains.plugins.template.services.MyApplicationService"/>
-        <projectService serviceImplementation="org.jetbrains.plugins.template.services.MyProjectService"/>
+        <toolWindow id="ChatBot" factoryClass="com.github.cspeisman.chatgptintellijplugin.chatbot.ChatBotToolWindow" anchor="right" icon="/icons/toolWindow.svg" canCloseContents="true" secondary="false" />
+        <applicationService
+                serviceImplementation="com.github.cspeisman.chatgptintellijplugin.settings.AppSettingsState"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.github.cspeisman.chatgptintellijplugin.settings.AppSettingsConfigurable"
+                id="com.github.cspeisman.chatgptintellijplugin.settings.AppSettingsConfigurable"
+                displayName="ChatBot: ChatGpt Settings"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="org.jetbrains.plugins.template.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotExplainAction"
+                class="com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotExplainAction" text="Ask ChatBot To Explain"
+                description="Ask Chatbot about this code">
+            <add-to-group group-id="ToolWindowContextMenu" anchor="first"/>
+        </action>
+        <action id="com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotRefactorAction"
+                class="com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotRefactorAction" text="Ask ChatBot To Refactor"
+                description="Ask Chatbot to refactor this code">
+            <add-to-group group-id="ToolWindowContextMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>

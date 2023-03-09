@@ -12,10 +12,10 @@ plugins {
     id("org.jetbrains.intellij") version "1.12.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "2.0.0"
-    // Gradle Qodana Plugin
-    id("org.jetbrains.qodana") version "0.1.13"
-    // Gradle Kover Plugin
-    id("org.jetbrains.kotlinx.kover") version "0.6.1"
+//    // Gradle Qodana Plugin
+//    id("org.jetbrains.qodana") version "0.1.13"
+//    // Gradle Kover Plugin
+//    id("org.jetbrains.kotlinx.kover") version "0.6.1"
 }
 
 group = properties("pluginGroup")
@@ -48,17 +48,17 @@ changelog {
 }
 
 // Configure Gradle Qodana Plugin - read more: https://github.com/JetBrains/gradle-qodana-plugin
-qodana {
-    cachePath.set(file(".qodana").canonicalPath)
-    reportPath.set(file("build/reports/inspections").canonicalPath)
-    saveReport.set(true)
-    showReport.set(System.getenv("QODANA_SHOW_REPORT")?.toBoolean() ?: false)
-}
+//qodana {
+//    cachePath.set(file(".qodana").canonicalPath)
+//    reportPath.set(file("build/reports/inspections").canonicalPath)
+//    saveReport.set(true)
+//    showReport.set(System.getenv("QODANA_SHOW_REPORT")?.toBoolean() ?: false)
+//}
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
-kover.xmlReport {
-    onCheck.set(true)
-}
+//kover.xmlReport {
+//    onCheck.set(true)
+//}
 
 tasks {
     wrapper {
@@ -118,4 +118,15 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
+}
+
+dependencies {
+    implementation("org.slf4j:slf4j-simple:2.0.5")
+    testImplementation("io.mockk:mockk:1.13.4")
+    testImplementation("org.slf4j:slf4j-nop:1.7.21")
+    testImplementation(kotlin("test"))
+
+    implementation("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("org.commonmark:commonmark:0.20.0")
 }
