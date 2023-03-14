@@ -9,8 +9,12 @@ import com.github.cspeisman.chatgptintellijplugin.ui.PromptFormatter
 import com.intellij.openapi.application.ApplicationManager
 
 
-class ChatBotActionService(private val actionType: ChatBotActionType) {
+class ChatBotActionService(private var actionType: ChatBotActionType) {
     val action = if (actionType == ChatBotActionType.EXPLAIN) "explain" else "refactor"
+
+    fun setActionType(actionType: ChatBotActionType) {
+        this.actionType = actionType
+    }
 
     fun getLabel(): String {
         val capitalizedAction = action.capitalize()

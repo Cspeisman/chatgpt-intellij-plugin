@@ -1,6 +1,7 @@
 package com.github.cspeisman.chatgptintellijplugin.ui
 
 import com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotActionService
+import com.github.cspeisman.chatgptintellijplugin.chatbot.actions.ChatBotActionType
 import com.intellij.openapi.ui.NullableComponent
 import com.intellij.ui.Gray
 import com.intellij.ui.JBColor
@@ -106,17 +107,13 @@ class ContentPanelComponent(private val chatBotActionService: ChatBotActionServi
 
         val searchTextArea = JTextField()
 
-        val listener: (e: ActionEvent) -> Unit = {
+        val listener: (ActionEvent) -> Unit = {
             val prompt = searchTextArea.text
             searchTextArea.text = ""
+            chatBotActionService.setActionType(ChatBotActionType.EXPLAIN)
             chatBotActionService.handlePromptAndResponse(this, object : PromptFormatter {
-                override fun getUIPrompt(): String {
-                    return prompt
-                }
-
-                override fun getRequestPrompt(): String {
-                    return prompt
-                }
+                override fun getUIPrompt() = prompt
+                override fun getRequestPrompt() = prompt
             })
         }
         searchTextArea.addActionListener(listener)
